@@ -19,12 +19,6 @@ const content = {
     tagline: 'Estudiante de Ingeniería Mecatrónica enfocado en Sistemas Embebidos, Automatización y Robótica.',
     aboutTitle: 'Sobre mí',
     aboutDesc: 'Soy un estudiante de Ingeniería en Mecatrónica (4to año) con experiencia práctica en manufactura, ensamblaje, pruebas y validación de sistemas mecánicos. He coordinado equipos multidisciplinarios, gestionando recursos y dado seguimiento a requerimientos y actividades de ingeniería. Destaco por mi capacidad de resolver problemas, trabajar en equipo y aprender en entornos prácticos. Cuento con experiencia académica internacional e inglés C1.',
-    interestsTitle: 'Intereses en ingeniería',
-    interests: [
-      { title: 'Robótica', desc: 'Manipuladores, rovers y sistemas móviles: de la mecánica al control.' },
-      { title: 'Automatización', desc: 'Modelado, control y sistemas que toman decisiones por sí solos.' },
-      { title: 'Sistemas electrónicos', desc: 'Circuitos, PCB y sistemas embebidos que conectan hardware y software.' }
-    ],
     education: [
       { id: 'udem', name: 'UDEM', logo: 'udem.webp', w: 104,
         degree: 'Ingeniería en Mecatrónica', meta: 'Graduación: diciembre 2027',
@@ -133,12 +127,6 @@ const content = {
     tagline: 'Mechatronics Engineering Student focused on Embedded Systems, Automation, and Robotics.',
     aboutTitle: 'About me',
     aboutDesc: "I'm a Mechatronics Engineering (4th year) student driven by a passion for building systems that integrate hardware and software. My projects explore embedded systems, artificial intelligence, and electronic design, with a growing focus on aerospace, robotics, and intelligent automation.",
-    interestsTitle: 'Engineering interests',
-    interests: [
-      { title: 'Robotics', desc: 'Manipulators, rovers and mobile systems: from mechanics to control.' },
-      { title: 'Automation', desc: 'Modeling, control and systems that make decisions on their own.' },
-      { title: 'Electronic systems', desc: 'Circuits, PCBs and embedded systems that connect hardware and software.' }
-    ],
     education: [
       { id: 'udem', name: 'UDEM', logo: 'udem.webp', w: 104,
         degree: 'B.Eng. in Mechatronics Engineering', meta: 'Graduation: December 2027',
@@ -249,16 +237,6 @@ const store = {
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 
-/* Schematic-style icons for the interest cards */
-const ICONS = [
-  /* Robotics: articulated arm */
-  `<svg viewBox="0 0 160 110" aria-hidden="true"><path d="M14 100h70"/><rect x="38" y="86" width="22" height="14"/><circle class="acc" cx="49" cy="80" r="5"/><path d="M49 75 86 38"/><circle class="acc" cx="90" cy="34" r="5"/><path d="M94 36l36 17"/><circle class="acc" cx="134" cy="55" r="4"/><path d="M137 52l12-7M137 59l12 7"/></svg>`,
-  /* Automation: closed-loop block diagram */
-  `<svg viewBox="0 0 160 110" aria-hidden="true"><path d="M4 40h17"/><circle cx="30" cy="40" r="9"/><path d="M24 34l12 12M36 34l-12 12"/><path d="M39 40h18"/><rect x="57" y="28" width="30" height="24"/><path d="M87 40h14"/><rect class="acc" x="101" y="28" width="30" height="24"/><path d="M131 40h25"/><path d="M144 40v36H30V49"/><path d="M26 56l4-7 4 7"/></svg>`,
-  /* Electronics: resistor + capacitor loop */
-  `<svg viewBox="0 0 160 110" aria-hidden="true"><path d="M10 30h35l7-14 8 28 8-28 8 28 8-28 7 14h29"/><path d="M150 30v52H86M74 82H10V30"/><path d="M86 70v24M74 70v24"/><circle class="acc" cx="10" cy="30" r="3.5"/><circle class="acc" cx="150" cy="30" r="3.5"/></svg>`
-];
-
 const state = {
   lang: content[store.get('lang')] ? store.get('lang') : (root.lang === 'en' ? 'en' : 'es'),
   category: 'all'
@@ -280,7 +258,6 @@ function renderStatic() {
   $('#about-desc').textContent = d.aboutDesc;
   $('#projects-title').textContent = d.projectsTitle;
   $('#cert-title').textContent = d.certTitle;
-  $('#interests-title').textContent = d.interestsTitle;
   $('#contact-title').textContent = d.contactTitle;
   $('#contact-lead').textContent = d.contactLead;
   $('#copy-email').textContent = d.ui.copy;
@@ -289,16 +266,6 @@ function renderStatic() {
   $('#stats').innerHTML = d.stats
     .map((s) => `<div><dt>${esc(s.label)}</dt><dd>${esc(s.value.replace('{certs}', certCount))}</dd></div>`)
     .join('');
-}
-
-function renderInterests() {
-  const d = content[state.lang];
-  $('#interests-grid').innerHTML = d.interests.map((it, i) => `
-    <article class="interest">
-      <div class="interest__art">${ICONS[i]}</div>
-      <h4 class="interest__title">${esc(it.title)}</h4>
-      <p class="interest__desc">${esc(it.desc)}</p>
-    </article>`).join('');
 }
 
 function renderSchools() {
@@ -371,7 +338,6 @@ function renderCertificates() {
 function render() {
   renderStatic();
   renderSchools();
-  renderInterests();
   renderProjects();
   renderFilters();
   renderCertificates();
